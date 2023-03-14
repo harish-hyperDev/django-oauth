@@ -1,0 +1,74 @@
+{% extends 'index.html' %}
+{% block content %}
+<script>
+    let tabs_length = document.getElementsByClassName("selected-link").length
+    for(let tab_index = 0; tab_index < tabs_length; tab_index++) {
+        document.getElementsByClassName("selected-link")[tab_index].style["text-decoration"] = "none";
+        document.getElementsByClassName("selected-link")[tab_index].style["color"] = "black";
+    }
+
+    document.getElementsByClassName("selected-link")[0].style["text-decoration"] = "underline";
+    document.getElementsByClassName("selected-link")[0].style["color"] = "blue";
+</script>
+<div class="content-container">
+    <div class="content-wrapper">
+
+        <div class="content card mb-3" >
+            <a href='https://hackernoon.com/32-awesome-javascript-snippets-one-liners-you-should-use-in-2023?source=rss' target="_blank" class="link">
+                <div class="row g-0">
+                
+                    <div class="col-md-4">
+                        <img src="https://raw.githubusercontent.com/voodootikigod/logo.js/master/js.png" class="img-fluid rounded-start card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Top 32 oneliners to use in your project</h5>
+                            <p class="card-text mt-4">Check out one of the top one-liners to use with JavaScript which can improve your performance and save your time.</p>
+                            {% comment %} <p class="card-text"><small class="text-muted">10m read time</small></p> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="content card mb-3" >
+            <a href="https://blog.openreplay.com/what-is-the-best-ide-for-react/" target="_blank" class="link">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" class="img-fluid rounded-start card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Best IDE for React</h5>
+                            <p class="card-text mt-4 text-wrap text-truncate">ReactJS is a popular JavaScript library for building user interfaces. One of the best tools for developers working with React is a good IDE.</p>
+                            {% comment %} <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="content card mb-3" >
+            <a href="https://daily-dev-tips.com/posts/python-lambda-functions/" target="_blank" class="link">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="https://logos-download.com/wp-content/uploads/2016/10/Python_logo_icon.png" class="img-fluid rounded-start card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">What are lambda functions</h5>
+                            <p class="card-text mt-4">Lambda functions are tiny functions that have no specific name and can only have one expression. They are also called anonymous functions.</p>
+                            {% comment %} <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>
+</div>
+<script>
+var selectedCategory;
+</script>
+{% endblock %}

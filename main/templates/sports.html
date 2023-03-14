@@ -1,0 +1,75 @@
+{% extends 'index.html' %}
+{% block content %}
+<script>
+    let tabs_length = document.getElementsByClassName("selected-link").length
+    for(let tab_index = 0; tab_index < tabs_length; tab_index++) {
+        document.getElementsByClassName("selected-link")[tab_index].style["text-decoration"] = "none";
+        document.getElementsByClassName("selected-link")[tab_index].style["color"] = "black";
+    }
+
+    document.getElementsByClassName("selected-link")[2].style["text-decoration"] = "underline";
+    document.getElementsByClassName("selected-link")[2].style["color"] = "blue";
+</script>
+<div class="content-container">
+    <div class="content-wrapper">
+
+        <div class="content card mb-3" >
+            <a href='https://www.bbc.com/sport/cricket/64954329' target="_blank" class="link">
+                <div class="row g-0">
+                
+                    <div class="col-md-4">
+                        <img src="https://ichef.bbci.co.uk/onesport/cps/800/cpsprodpb/17348/production/_128984059_gettyimages-1473463424.jpg" class="img-fluid rounded-start card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">England's T20 series whitewash by Bangladesh an 'eye-opener'</h5>
+                            <p class="card-text mt-4">England's 3-0 defeat by Bangladesh in the Twenty20 series has been an "eye-opener", according to white-ball...</p>
+                            {% comment %} <p class="card-text"><small class="text-muted">10m read time</small></p> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="content card mb-3" >
+            <a href="https://www.bbc.com/sport/football/64952428" target="_blank" class="link">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="https://ichef.bbci.co.uk/onesport/cps/800/cpsprodpb/14DAA/production/_128981458_gettyimages-1451357939.jpg" class="img-fluid rounded-start card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">World Cup 2026: Fifa switches back to four-team group format</h5>
+                            <p class="card-text mt-4 text-wrap text-truncate">Fifa has switched the format for the expanded 2026 World Cup back to four-team groups.</p>
+                            {% comment %} <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="content card mb-3" >
+            <a href="https://www.bbc.com/sport/rugby-union/64949944" target="_blank" class="link">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="https://ichef.bbci.co.uk/onesport/cps/800/cpsprodpb/C8C5/production/_128979315_gettyimages-1473036370.jpg" class="img-fluid rounded-start card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Six Nations 2023: England's Marcus Smith relishing 'free swing' at Ireland in finale</h5>
+                            <p class="card-text mt-4">Fly-half Marcus Smith says England are relishing a "free swing"...</p>
+                            {% comment %} <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>
+</div>
+<script>
+var selectedCategory;
+</script>
+{% endblock %}
+
