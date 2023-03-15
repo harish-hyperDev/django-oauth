@@ -14,23 +14,7 @@
     <div class="content-container">
         <div class="content-wrapper">
 
-            {% comment %} <div class="content card">
-                <img src="https://raw.githubusercontent.com/voodootikigod/logo.js/master/js.png" class="content-image col-md-2" />
-                <div class="content-title col-md-2">
-                    <h3>Top 10 oneliners to use in your project</h3>
-                </div>
-            </div>
-
-            <div class="content card">
-                <img src="https://raw.githubusercontent.com/voodootikigod/logo.js/master/js.png" class="content-image col-md-2" />
-                <div class="content-title col-md-2">
-                    <h3>Top JS libraries and frameworks</h3>
-                </div>
-            </div> {% endcomment %}
-
-            
-
-            <div class="content card mb-3" >
+            <!--<div class="content card mb-3" >
                 <a href='https://www.bbc.com/news/world-asia-india-64899489' target="_blank" class="link">
                     <div class="row g-0">
                     
@@ -81,7 +65,26 @@
                         </div>
                     </div>
                 </a>
+            </div>-->
+
+            {% for post in posts %}
+            <div class="content card mb-3" >
+                <a href={{ post.link }} target="_blank" class="link">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src={{ post.image }} class="img-fluid rounded-start card-image" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ post.title | slice:50 }}</h5>
+                                <p style="height: 75px;" class="card-text mt-4 overflow-hidden">{{ post.text }}</p>
+                                {% comment %} <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> {% endcomment %}
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
+            {% endfor %}
 
         </div>
     </div>

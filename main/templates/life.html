@@ -13,7 +13,7 @@
 <div class="content-container">
     <div class="content-wrapper">
 
-        <div class="content card mb-3" >
+        <!--<div class="content card mb-3" >
             <a href='https://www.bbc.com/worklife/article/20230103-how-to-strengthen-willpower' target="_blank" class="link">
                 <div class="row g-0">
                 
@@ -63,9 +63,29 @@
                     </div>
                 </div>
             </a>
+        </div>-->
+
+        {% for post in posts %}
+        <div class="content card mb-3" >
+            <a href={{ post.link }} target="_blank" class="link">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src={{ post.image }} class="img-fluid rounded-start card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title | slice:50 }}</h5>
+                            <p style="height: 75px;" class="card-text mt-4 overflow-hidden">{{ post.text }}</p>
+                            {% comment %} <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
+        {% endfor %}
 
     </div>
+
 </div>
 </div>
 <script>

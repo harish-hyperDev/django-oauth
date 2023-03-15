@@ -2,20 +2,28 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 from django.shortcuts import render
+from .models import Posts, PostItem
 
-# Create your views here.
 
 def login(response):
     pass
 
+
 def technology(response):
-    return render(response, "technology.html", {"visited": "technology"})
+    technology_posts = Posts.objects.get(name="Technology").postitem_set.all()
+    return render(response, "technology.html", {"visited": "technology", "posts": technology_posts})
+
 
 def news(response):
-    return render(response, "news.html", {"visted": "news"})
+    news_posts = Posts.objects.get(name="News").postitem_set.all()
+    return render(response, "news.html", {"visited": "news", "posts": news_posts})
+
 
 def sports(response):
-    return render(response, "sports.html", {"visted": "sports"})
+    sports_posts = Posts.objects.get(name="Sports").postitem_set.all()
+    return render(response, "sports.html", {"visited": "sports", "posts": sports_posts})
+
 
 def life(response):
-    return render(response, "life.html", {"visted": "life"})
+    life_posts = Posts.objects.get(name="Life").postitem_set.all()
+    return render(response, "life.html", {"visited": "life", "posts": life_posts})

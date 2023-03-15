@@ -13,10 +13,10 @@
 <div class="content-container">
     <div class="content-wrapper">
 
-        <div class="content card mb-3" >
+        <!--<div class="content card mb-3" >
             <a href='https://hackernoon.com/32-awesome-javascript-snippets-one-liners-you-should-use-in-2023?source=rss' target="_blank" class="link">
                 <div class="row g-0">
-                
+
                     <div class="col-md-4">
                         <img src="https://raw.githubusercontent.com/voodootikigod/logo.js/master/js.png" class="img-fluid rounded-start card-image" alt="...">
                     </div>
@@ -63,11 +63,33 @@
                     </div>
                 </div>
             </a>
+        </div>-->
+
+
+
+
+        {% for post in posts %}
+        <div class="content card mb-3" >
+            <a href={{ post.link }} target="_blank" class="link">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src={{ post.image }} class="img-fluid rounded-start card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title | slice:50 }}</h5>
+                            <p style="height: 75px;" class="card-text mt-4 overflow-hidden">{{ post.text }}</p>
+                            {% comment %} <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
+        {% endfor %}
 
     </div>
 </div>
-</div>
+<!--</div>-->
 <script>
 var selectedCategory;
 </script>
