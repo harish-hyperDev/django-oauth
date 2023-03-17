@@ -1,14 +1,9 @@
 {% extends "index.html"%}
 {% block content %}
     <script>
-        let tabs_length = document.getElementsByClassName("selected-link").length
-        for(let tab_index = 0; tab_index < tabs_length; tab_index++) {
-            document.getElementsByClassName("selected-link")[tab_index].style["text-decoration"] = "none";
-            document.getElementsByClassName("selected-link")[tab_index].style["color"] = "black";
-        }
-
-        document.getElementsByClassName("selected-link")[1].style["text-decoration"] = "underline";
-        document.getElementsByClassName("selected-link")[1].style["color"] = "blue";
+        removeTabUnderline();
+        $("#news-tab")[0].style["text-decoration"] = "underline"
+        $("#news-tab")[0].style["color"] = "blue"
     </script>
 
     <div class="content-container">
@@ -24,7 +19,7 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">{{ post.title | slice:50 }}</h5>
-                                <p style="height: 75px;" class="card-text mt-4 overflow-hidden">{{ post.text }}</p>
+                                <p style="height: 75px; overflow: hidden;" class="card-text mt-4 overflow-hidden">{{ post.text }}</p>
                                 {% comment %} <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> {% endcomment %}
                             </div>
                         </div>

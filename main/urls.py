@@ -12,6 +12,7 @@ urlpatterns = [
     path('news/', views.news, name="news"),
     path('sports/', views.sports, name="sports"),
     path('life/', views.life, name="life"),
+    path('add/', views.add_post, name="add_post"),
     # path('accounts/google/login/', TemplateView.as_view(template_name="oauth_signin.html")),
     # path('accounts/', include('allauth.urls')),
     # path('logout/', LogoutView.as_view()),
