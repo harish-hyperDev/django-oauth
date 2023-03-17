@@ -47,15 +47,23 @@ def add_post(response):
 
         print("\n\nrecursing\n\n")
         for key in received_post:
+            errors[key] = {}
             if received_post[key].strip() == "":
                 # if not key == "image":
-                errors[key] = "Invalid"
+                errors[key]["error"] = "Invalid"
+                errors[key]["text"] = received_post[key]
+
+            if key == "link" or key == "image":
+                if not validators.url(received_post[key]):
+                    errors[key]["error"] = "Invalid"
+                    errors[key]["text"] = received_post[key]
 
         print("received: ", received_post)
         print(response.POST)
         print(response.POST.get("post_title"))
+        print("\n\n")
 
-        print("the category ----->>>> ", received_post["category"])
+        print("the category ----->>>> \n\n", received_post["category"])
         if not errors:
             print(errors)
             # post_category = received_post.category
@@ -75,10 +83,13 @@ def add_post(response):
             form = CreatePost(response.POST)
             print("valid form: ", form.is_valid())
 
+        else:
+            return render(response, "add_post.html", {"errors": errors})
+
         # if form.is_valid():
         #     print("\n\n\ntitle is ", form.cleaned_data["title"])
         # else:
         #     print("\n\n\nIssue in form is valid")
     # else:
 
-    return render(response, "add_post.html", {})
+    return render(response, "add_post.html", {"errors": {}})
