@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'main',
     # 'main.apps.MainConfig',
 
+    # for hot-reload
+    # 'livereload',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -56,6 +59,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # for hot-reload
+    # 'livereload.middleware.LiveReloadScript',
 ]
 
 ROOT_URLCONF = 'ouath_tabs.urls'
@@ -155,4 +161,5 @@ SITE_ID = 2
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
+# LIVERELOAD_HOST = '127.0.0.1'
+# LIVERELOAD_PORT = '8080'

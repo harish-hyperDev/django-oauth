@@ -1,0 +1,113 @@
+{% extends "index.html" %}
+
+{% block content %}
+<style>
+    .post-header {
+        display: flex;
+        height: 30px;
+    }
+    .edit-button-div,
+    .delete-button-div {
+        /* position: absolute; */
+        height: 35px;
+        margin: 0px 3px !important;
+        /* margin-left: auto !important; */
+    }
+    .edit-button,
+    .delete-button {
+        padding: 5px !important;
+        padding-top: 6px !important;
+
+        border: 1px solid #e14554;
+        border-radius: 5px;
+        height: 85% !important;
+
+        color: #e14554;
+        transition: color 0.2s, background-color 0.2s;
+    }
+
+    .edit-button {
+        color: #4582dc !important;
+        border: 1px solid #4582dc !important;
+    }
+
+    .edit-button:hover {
+        color: #fff !important;
+        background-color: rgb(76, 139, 231) !important;
+        cursor: pointer;
+    }
+
+    .delete-button:hover {
+        color: #fff;
+        background-color: #e14554;
+        cursor: pointer;
+    }
+
+    .edit-button-div {
+        margin-left: auto !important;
+    }
+    .post-title {
+        margin-right: 10px;
+    }
+</style>
+
+<div class="content-container">
+    <div class="content-wrapper">
+
+        {% for post in posts %}
+        <div class="content card mb-3" >
+<!--            <a href={{ post.link }} target="_blank" class="link">-->
+                <div class="row g-2">
+                    <div class="col-md-4">
+                        <img src={{ post.image }} class="img-fluid rounded-start card-image" alt="...">
+                    </div>
+                    <div class="col-md-8 text-container">
+                        <div class="card-body">
+                            <div class="post-header">
+                                <h5 class="card-title post-title">{{ post.title | slice:50 }}</h5>
+                                <div class="btn-group edit-button-div" role="group">
+                                    <i class="bi bi-pencil-fill edit-button"></i>
+                                </div>
+                                <div class="btn-group delete-button-div" role="group">
+                                    <i class="bi bi-trash delete-button"></i>
+                                </div>
+
+                                <!--<button type="button" class="btn btn-secondary"
+                                        data-bs-toggle="popover" data-bs-placement="right"
+                                        data-bs-custom-class="custom-popover"
+                                        data-bs-title="Custom popover"
+                                        data-bs-content="This popover is themed via CSS variables.">
+                                    Custom popover
+                                </button>-->
+
+
+                            </div>
+                            <p style="height: 75px; overflow: hidden;" class="card-text mt-4 overflow-hidden">{{ post.text }}</p>
+                            {% comment %} <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+<!--            </a>-->
+        </div>
+
+
+        {% endfor %}
+
+<!--    <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>-->
+    <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+      Popover on right
+    </button>
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('[data-toggle="popover"]').popover({
+            sanitize: true,
+            container: "div"
+        })
+    })();
+</script>
+
+{% endblock %}
