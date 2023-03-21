@@ -13,6 +13,39 @@
         margin: 0px 3px !important;
         /* margin-left: auto !important; */
     }
+
+    .delete-pop {
+        display: none;
+        position: absolute;
+        height: 100px !important;
+        width: 150px !important;
+        left: 100%;
+        border: 1px solid rgb(213, 213, 213);
+    }
+
+    .delete-options {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .delete-options button {
+        color: #000;
+        background-color: #fff;
+        margin: 5px 20px;
+        padding: 5px;
+        border: 1px solid rgb(180, 180, 180, 0.8);
+        border-radius: 5px;
+        transition: 0.5s background-color, 0.5s color;
+    }
+
+    .delete-options button:hover {
+        cursor: pointer;
+        background-color: #ddd;
+    }
+
     .edit-button,
     .delete-button {
         padding: 5px !important;
@@ -43,6 +76,20 @@
         cursor: pointer;
     }
 
+    /* .delete-button-div:hover + .delete-pop {
+        display: block;
+    } */
+
+    .confirm-delete {
+        border-bottom: 1px solid rgba(0,0,0,.2);
+        border-top-left-radius: calc(0.3rem - 1px);
+        border-top-right-radius: calc(0.3rem - 1px);
+        padding: 3px 5px;
+        background-color: rgb(240, 238, 233);
+        border-bottom-color: rgba(28, 30, 31, 0.2);
+
+    }
+
     .edit-button-div {
         margin-left: auto !important;
     }
@@ -51,7 +98,8 @@
     }
 </style>
 
-<div class="content-container">
+<form class="content-container" method="POST" action="/manage/">
+    {% csrf_token %}
     <div class="content-wrapper">
 
         {% for post in posts %}
@@ -61,7 +109,8 @@
                     <div class="col-md-4">
                         <img src={{ post.image }} class="img-fluid rounded-start card-image" alt="...">
                     </div>
-                    <div class="col-md-8 text-container">
+                    <div class="col-md-8 text-container " >
+
                         <div class="card-body">
                             <div class="post-header">
                                 <h5 class="card-title post-title">{{ post.title | slice:50 }}</h5>
@@ -70,6 +119,13 @@
                                 </div>
                                 <div class="btn-group delete-button-div" role="group">
                                     <i class="bi bi-trash delete-button"></i>
+                                </div>
+                                <div class="delete-pop">
+                                    <div class="confirm-delete" >Want to delete?</div>
+                                    <div class="delete-options" name={{ post.category }} id={{ post.id }}>
+                                        <button class="confirm-yes" name="delete-confirm" type="submit">Yes</button>
+                                        <button type="submit">No</button>
+                                    </div>
                                 </div>
 
                                 <!--<button type="button" class="btn btn-secondary"
@@ -88,26 +144,65 @@
                     </div>
                 </div>
 <!--            </a>-->
+
         </div>
 
 
         {% endfor %}
 
 <!--    <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>-->
-    <button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
-      Popover on right
-    </button>
+
 
     </div>
-</div>
+</form>
 
 <script>
     $(function () {
-        $('[data-toggle="popover"]').popover({
-            sanitize: true,
-            container: "div"
+        console.log($(".delete-button-div")[0])
+        $(".delete-button-div").click(function() {
+            // console.log(this)
+
+            console.log('status ', $(".delete-pop")[0].style["display"]);
+            if($(".delete-button-div + .delete-pop")[0].style["display"] == "none" || $(".delete-button-div + .delete-pop")[0].style["display"].trim() == "") {
+                $(".delete-pop")[0].style["display"] = "block";
+
+                $(".delete-button")[0].style["color"] = "#fff";
+                $(".delete-button")[0].style["background-color"] = "#e14554";
+                $(".delete-button")[0].style["cursor"] = "pointer";
+            }
+            else {
+                $(".delete-pop")[0].style["display"] = "none";
+
+                $(".delete-button")[0].style["color"] = "#e14554";
+                $(".delete-button")[0].style["background-color"] = "#fff";
+                $(".delete-button")[0].style["cursor"] = "pointer";
+            }
         })
-    })();
+        /* $(".delete-button-div").mouseout(function() {
+            // console.log(this)
+            $(".delete-pop")[0].style["display"] = "none";
+        }) */
+    })
+
+    $(".confirm-yes").click(function() {
+
+        // console.log($(this).val())
+
+        let categoryRegex = /[A-Z]\w+/
+        let idRegex = /[1-9][0-9]*/
+
+        let categoryName = $(this)[0]["parentNode"]
+        let categoryId = parseInt(categoryName.outerHTML.match(idRegex)[0])
+
+        categoryName = categoryName.outerHTML.match(categoryRegex)[0]
+        console.log(categoryId, " - ", typeof(categoryId))
+        console.log(categoryName, " - ", typeof(categoryName))
+
+        $(this)[0]["value"] = JSON.stringify({"delete": "yes", "categoryId": categoryId, "categoryName": categoryName})
+    })
+
+    /*let fooPost = {{ posts }}
+    console.log(fooPost)*/
 </script>
 
 {% endblock %}

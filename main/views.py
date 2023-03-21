@@ -113,6 +113,16 @@ def add_post(response):
 def manage_post(response):
     post_categories = Posts.objects.all()
 
+    print("\n\n-------Reponse : %s--------\n\n", response.method)
+    if response.method == "POST":
+        print("response")
+        # print(response.POST.get("delete-confirm"))
+        confirm_delete = json.loads(response.POST.get("delete-confirm"))
+
+        # if confirm_delete:
+
+        # if confirm_delete == "yes":
+
     all_posts = []
     for category in post_categories:
         items = category.postitem_set.all()
