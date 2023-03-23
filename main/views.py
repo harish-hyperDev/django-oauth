@@ -101,27 +101,27 @@ def add_post(response):
             received_post["data_dump"] = data_dump
             return render(response, "add_post.html", {"errors": errors, "text_fields": js(received_post)})
 
-        # if form.is_valid():
-        #     print("\n\n\ntitle is ", form.cleaned_data["title"])
-        # else:
-        #     print("\n\n\nIssue in form is valid")
-    # else:
-
     return render(response, "add_post.html", {"errors": {}})
 
 
 def manage_post(response):
     post_categories = Posts.objects.all()
 
-    print("\n\n-------Reponse : %s--------\n\n", response.method)
+    print("\n\n-------Response : %s--------\n\n", response.method)
     if response.method == "POST":
         print("response")
         # print(response.POST.get("delete-confirm"))
         confirm_delete = json.loads(response.POST.get("delete-confirm"))
+        print("confirm delete: ", confirm_delete)
 
-        # if confirm_delete:
+        if confirm_delete:
+            if confirm_delete["delete"] == "yes":
+                postitem_category = Posts.objects.get(name=confirm_delete["categoryName"])
 
-        # if confirm_delete == "yes":
+                delete_postitem = postitem_category.postitem_set.get(id=confirm_delete["categoryId"])
+                delete_postitem.delete()
+
+            # delete_post.postitem_set.get(id=confirm_delete.categoryId).delete()
 
     all_posts = []
     for category in post_categories:

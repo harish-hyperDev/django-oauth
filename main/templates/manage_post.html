@@ -162,20 +162,23 @@
         $(".delete-button-div").click(function() {
             // console.log(this)
 
-            console.log('status ', $(".delete-pop")[0].style["display"]);
-            if($(".delete-button-div + .delete-pop")[0].style["display"] == "none" || $(".delete-button-div + .delete-pop")[0].style["display"].trim() == "") {
-                $(".delete-pop")[0].style["display"] = "block";
+            console.log('status ', $(this)[0]["nextElementSibling"].style["display"]);
+            if($(this)[0]["nextElementSibling"].style["display"] == "none" || $(this)[0]["nextElementSibling"].style["display"].trim() == "") {
+                console.log("debug this");
 
-                $(".delete-button")[0].style["color"] = "#fff";
-                $(".delete-button")[0].style["background-color"] = "#e14554";
-                $(".delete-button")[0].style["cursor"] = "pointer";
+                console.log($(this)[0]["children"][0])
+                $(this)[0]["nextElementSibling"].style["display"] = "block";
+
+                $(this)[0]["children"][0].style["color"] = "#fff";
+                $(this)[0]["children"][0].style["background-color"] = "#e14554";
+                $(this)[0]["children"][0].style["cursor"] = "pointer";
             }
             else {
-                $(".delete-pop")[0].style["display"] = "none";
+                $(this)[0]["nextElementSibling"].style["display"] = "none";
 
-                $(".delete-button")[0].style["color"] = "#e14554";
-                $(".delete-button")[0].style["background-color"] = "#fff";
-                $(".delete-button")[0].style["cursor"] = "pointer";
+                $(this)[0]["children"][0].style["color"] = "#e14554";
+                $(this)[0]["children"][0].style["background-color"] = "#fff";
+                $(this)[0]["children"][0].style["cursor"] = "pointer";
             }
         })
         /* $(".delete-button-div").mouseout(function() {
