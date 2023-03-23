@@ -115,7 +115,7 @@
                             <div class="post-header">
                                 <h5 class="card-title post-title">{{ post.title | slice:50 }}</h5>
                                 <div class="btn-group edit-button-div" role="group">
-                                    <i class="bi bi-pencil-fill edit-button"></i>
+                                    <button class="bi bi-pencil-fill edit-button" name="edit"></button>
                                 </div>
                                 <div class="btn-group delete-button-div" role="group">
                                     <i class="bi bi-trash delete-button"></i>
@@ -124,7 +124,7 @@
                                     <div class="confirm-delete" >Want to delete?</div>
                                     <div class="delete-options" name={{ post.category }} id={{ post.id }}>
                                         <button class="confirm-yes" name="delete-confirm" type="submit">Yes</button>
-                                        <button type="submit">No</button>
+                                        <button class="confirm-no" type="submit">No</button>
                                     </div>
                                 </div>
 
@@ -204,6 +204,11 @@
         $(this)[0]["value"] = JSON.stringify({"delete": "yes", "categoryId": categoryId, "categoryName": categoryName})
     })
 
+    $(".edit-button").click(function () {
+        $(this).value = "yes"
+        console.log($(this).val())
+
+    })
     /*let fooPost = {{ posts }}
     console.log(fooPost)*/
 </script>

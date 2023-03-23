@@ -36,36 +36,46 @@
     <div class="add-post-container">
         <div class="form-group">
             <label for="postTitle">Post's Title</label>
-            <input type="text" name="post_title" class="form-control"  id="postTitle" aria-describedby="postTitleText" placeholder="Enter title of the post" required>
+            {% block title_block %}
+                <input type="text" name="post_title" class="form-control"  id="postTitle" aria-describedby="postTitleText" placeholder="Enter title of the post" required>
+            {% endblock %}
         </div>
         <div class="form-group">
             <label for="postContent">Post's Description</label>
-            <input type="text" name="post_text" class="form-control"  id="postContent" aria-describedby="postContentTitle" placeholder="Enter description of the post" required>
+            {% block content_block %}
+                <input type="text" name="post_text" class="form-control"  id="postContent" aria-describedby="postContentTitle" placeholder="Enter description of the post" required>
+            {% endblock %}
         </div>
 
         <div class="form-group">
             <label for="postLink">Post's Link</label>
-            <input type="text" name="post_link" class="form-control" id="postLink" aria-describedby="postLinkUrl" placeholder="Paste url link of the post here" required>
-            {% if errors.link %}
-            <small style="color: red !important;" class="text-muted">Link is Invalid</small>
-            {% endif %}
+            {% block link_block %}
+                <input type="text" name="post_link" class="form-control" id="postLink" aria-describedby="postLinkUrl" placeholder="Paste url link of the post here" required>
+                {% if errors.link %}
+                    <small style="color: red !important;" class="text-muted">Link is Invalid</small>
+                {% endif %}
+            {% endblock %}
         </div>
         <div class="form-group">
             <label for="postImage">Post's Image</label>
-            <input type="text" name="post_image" class="form-control" id="postImage" aria-describedby="postImageUrl" placeholder="Paste url of the post image here" required>
-            {% if errors.image %}
-            <small style="color: red !important;" class="text-muted">Link is Invalid</small>
-            {% endif %}
+            {% block image_block %}
+                <input type="text" name="post_image" class="form-control" id="postImage" aria-describedby="postImageUrl" placeholder="Paste url of the post image here" required>
+                {% if errors.image %}
+                    <small style="color: red !important;" class="text-muted">Link is Invalid</small>
+                {% endif %}
+            {% endblock %}
         </div>
         <div class="form-group">
             <label for="postCategory">Post's Category <small class="text-muted">(Select Category)</small> </label>
-            <select name="post_category" class="custom-select" id="postCategory">
-                <!--                <option selected>-&#45;&#45;Select Category-&#45;&#45;</option>-->
-                <option value="Technology">Technology</option>
-                <option value="News">News</option>
-                <option value="Sports">Sports</option>
-                <option value="Life">Life</option>
-            </select>
+            {% block category_block %}
+                <select name="post_category" class="custom-select" id="postCategory">
+                    <!--                <option selected>-&#45;&#45;Select Category-&#45;&#45;</option>-->
+                    <option value="Technology">Technology</option>
+                    <option value="News">News</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Life">Life</option>
+                </select>
+            {% endblock %}
         </div>
 
         <script type="text/javascript">

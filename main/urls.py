@@ -13,6 +13,7 @@ urlpatterns = [
     path('sports/', views.sports, name="sports"),
     path('life/', views.life, name="life"),
     path('add/', views.add_post, name="add_post"),
+    path('edit/', views.edit_post, name="edit_post"),
     path('manage/', views.manage_post, name="manage_post"),
     # path('accounts/google/login/', TemplateView.as_view(template_name="oauth_signin.html")),
     # path('accounts/', include('allauth.urls')),

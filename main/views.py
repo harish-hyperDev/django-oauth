@@ -103,23 +103,32 @@ def add_post(response):
 
     return render(response, "add_post.html", {"errors": {}})
 
+def edit_post(response):
+    return render(response, "add_post.html", {"errors": {}})
+
 
 def manage_post(response):
     post_categories = Posts.objects.all()
 
     print("\n\n-------Response : %s--------\n\n", response.method)
     if response.method == "POST":
-        print("response")
-        # print(response.POST.get("delete-confirm"))
-        confirm_delete = json.loads(response.POST.get("delete-confirm"))
-        print("confirm delete: ", confirm_delete)
+        print("response -- ", response.method)
+        print(response.POST.get("edit"))
 
-        if confirm_delete:
-            if confirm_delete["delete"] == "yes":
-                postitem_category = Posts.objects.get(name=confirm_delete["categoryName"])
+        if response.POST.get("edit"):
+            print("edit post")
+            # print(response.POST.get("delete-confirm"))
 
-                delete_postitem = postitem_category.postitem_set.get(id=confirm_delete["categoryId"])
-                delete_postitem.delete()
+        else:
+            confirm_delete = json.loads(response.POST.get("delete-confirm"))
+            print("confirm delete: ", confirm_delete)
+
+            if confirm_delete:
+                if confirm_delete["delete"] == "yes":
+                    postitem_category = Posts.objects.get(name=confirm_delete["categoryName"])
+
+                    delete_postitem = postitem_category.postitem_set.get(id=confirm_delete["categoryId"])
+                    delete_postitem.delete()
 
             # delete_post.postitem_set.get(id=confirm_delete.categoryId).delete()
 
