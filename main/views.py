@@ -88,6 +88,7 @@ def add_post(response):
                 # form = CreatePost(response.POST)
                 # print("valid form: ", form.is_valid())
             elif response.POST.get("submit") == "edit":
+                print("edit it is")
                 pass
 
 
