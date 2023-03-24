@@ -114,9 +114,11 @@
                         <div class="card-body">
                             <div class="post-header">
                                 <h5 class="card-title post-title">{{ post.title | slice:50 }}</h5>
-                                <div class="btn-group edit-button-div" role="group">
+
+                                <div class="btn-group edit-button-div" role="group" name={{ post.category }} id={{ post.id }}>
                                     <button class="bi bi-pencil-fill edit-button" name="edit"></button>
                                 </div>
+
                                 <div class="btn-group delete-button-div" role="group">
                                     <i class="bi bi-trash delete-button"></i>
                                 </div>
@@ -205,8 +207,21 @@
     })
 
     $(".edit-button").click(function () {
-        $(this).value = "yes"
-        console.log($(this).val())
+
+        let categoryRegex = /[A-Z]\w+/
+        let idRegex = /[1-9][0-9]*/
+
+        let categoryName = $(this)[0]["parentNode"]
+        let categoryId = parseInt(categoryName.outerHTML.match(idRegex)[0])
+
+        categoryName = categoryName.outerHTML.match(categoryRegex)[0]
+        console.log(categoryId, " - ", typeof(categoryId))
+        console.log(categoryName, " - ", typeof(categoryName))
+
+        // $(this).value = "yes"
+        // console.log($(this).val())
+
+        $(this)[0]["value"] = JSON.stringify({"delete": "yes", "categoryId": categoryId, "categoryName": categoryName})
 
     })
     /*let fooPost = {{ posts }}

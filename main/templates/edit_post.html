@@ -1,0 +1,43 @@
+{% extends "add_post.html" %}
+{% block title_block %}
+    <input type="text" name="post_title" class="form-control"  id="postTitle" aria-describedby="postTitleText" placeholder="Enter title of the post" required>
+{% endblock %}
+{%  block content_block %}
+    <input type="text" name="post_text" class="form-control"  id="postContent" aria-describedby="postContentTitle" placeholder="Enter description of the post" required>
+{% endblock %}
+{% block link_block %}
+    <input type="text" name="post_link" class="form-control"  id="postLink" aria-describedby="postLinkUrl" placeholder="Paste url link of the post here" required>
+{% endblock %}
+{% block image_block %}
+    <input type="text" name="post_image" class="form-control"  id="postImage" aria-describedby="postImageUrl" placeholder="Paste url of the post image here" required>
+{% endblock %}
+{% block category_block %}
+    <select name="post_category" class="custom-select" id="postCategory">
+        <option value="Technology">Technology</option>
+        <option value="News">News</option>
+        <option value="Sports">Sports</option>
+        <option value="Life">Life</option>
+    </select>
+{% endblock %}
+
+{% block submit_block %}
+    <button type="submit" name="submit" id="postId" value="edit" class="btn btn-primary add-post-submit">Submit</button>
+{% endblock %}
+
+{% block script_block %}
+<script type="text/javascript">
+    // console.log( {{ text_fields }} )
+    var fields = {{ text_fields }}
+    console.log(fields)
+
+    $("#postId")[0]["value"] = fields.id
+    $("#postTitle")[0]["value"] = fields.title
+    $("#postContent")[0]["value"] = fields.text
+    $("#postLink")[0]["value"] = fields.link
+    $("#postImage")[0]["value"] = fields.image
+    $("#postCategory")[0]["value"] = fields.category
+</script>
+{% endblock %}
+
+
+

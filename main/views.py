@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 from django.shortcuts import render
+from django.core import serializers
+from django.http import JsonResponse
+
 from django.utils.safestring import mark_safe
 from django.template import Library
 
@@ -69,20 +72,24 @@ def add_post(response):
             print("no errors ", errors)
             # post_category = received_post.category
 
-            post = Posts.objects.get(name=received_post["category"])
+            if response.POST.get("submit") == "add":
+                post = Posts.objects.get(name=received_post["category"])
 
-            # creating PostItem
-            post.postitem_set.create(
-                title=received_post["title"],
-                text=received_post["text"],
-                image=received_post["image"],
-                link=received_post["link"]
-            ).save()
+                # creating PostItem
+                post.postitem_set.create(
+                    title=received_post["title"],
+                    text=received_post["text"],
+                    image=received_post["image"],
+                    link=received_post["link"]
+                ).save()
 
-            # saving the PostItem
+                # saving the PostItem
 
-            form = CreatePost(response.POST)
-            print("valid form: ", form.is_valid())
+                # form = CreatePost(response.POST)
+                # print("valid form: ", form.is_valid())
+            elif response.POST.get("submit") == "edit":
+                pass
+
 
         else:
             print("errors ", errors)
@@ -104,7 +111,13 @@ def add_post(response):
     return render(response, "add_post.html", {"errors": {}})
 
 def edit_post(response):
-    return render(response, "add_post.html", {"errors": {}})
+    edit_post = json.loads(response.POST.get("edit"))
+    print("edit post ", edit_post)
+    print("type ", type(edit_post))
+
+    post = Posts.objects.get(name=edit_post["categoryName"]).postitem_set.get(id=edit_post["categoryId"])
+
+    return post
 
 
 def manage_post(response):
@@ -113,10 +126,48 @@ def manage_post(response):
     print("\n\n-------Response : %s--------\n\n", response.method)
     if response.method == "POST":
         print("response -- ", response.method)
-        print(response.POST.get("edit"))
 
         if response.POST.get("edit"):
-            print("edit post")
+            post_model = edit_post(response)
+            post = {
+                "id": post_model.id,
+                "title": post_model.title,
+                "text": post_model.text,
+                "link": post_model.link,
+                "image": post_model.image,
+                "category": str(post_model.category)
+            }
+
+            print("render post type " , type(post))
+            print("category type: ", type(post["category"]))
+            # print(post["link"])
+
+            # print(rendered)
+
+            # needs optimization
+            register = Library()
+
+            @register.filter(is_safe=True)
+            def js(obj):
+                return mark_safe(json.dumps(obj))
+
+            print("mark safe")
+
+
+
+            # new_post = serializers.serialize('json', PostItem.objects.all())
+            # print(new_post)
+            # print(js(post))
+            # users = PostItem.objects.all()
+            # print( JsonResponse({'data': list(users)}) )
+
+
+            # data_dump = json.dumps(post)
+            # post["data_dump"] = data_dump
+            # print(post.id, post.text, post.title, post.category, post.link, post.image)
+
+            # return render(response, "edit_post.html", json.loads({ "text_fields": {"title": post["title"], "text": post["text"], "link": post["link"], "image": post["image"], "id": post["id"], "category": post["category"]} }))
+            return render(response, "edit_post.html", {"text_fields": js(post)})
             # print(response.POST.get("delete-confirm"))
 
         else:
@@ -138,6 +189,6 @@ def manage_post(response):
         for item in items:
             all_posts.append(item)
 
-    print("\n\n---all posts---\n\n", all_posts)
-    print("\n\nfirst post ", all_posts[0].text)
+    # print("\n\n---all posts---\n\n", all_posts)
+    # print("\n\nfirst post ", all_posts[0].text)
     return render(response, "manage_post.html", {"posts": all_posts})

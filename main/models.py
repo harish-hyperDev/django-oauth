@@ -18,3 +18,6 @@ class PostItem(models.Model):
 
     def __str__(self):
         return self.title
+
+    def __value__(self):
+        return self.category
