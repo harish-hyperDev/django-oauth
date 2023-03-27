@@ -30,7 +30,7 @@
     var fields = {{ text_fields }}
     console.log(fields)
 
-    $("#postId")[0]["value"] = {"value" : "yes", "id": fields.id},
+    $("#postId")[0]["value"] = JSON.stringify({"value" : "edit", "id": fields.id}),
     $("#postTitle")[0]["value"] = fields.title
     $("#postContent")[0]["value"] = fields.text
     $("#postLink")[0]["value"] = fields.link

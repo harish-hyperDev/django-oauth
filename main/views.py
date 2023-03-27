@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login    #for authenticating user login
+from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import JsonResponse
 
@@ -16,8 +18,48 @@ import json
 
 
 def login(response):
-    pass
+    if response.method == "GET":
+        print("login")
+        print(response.user)
+        return render(response, "index.html", {})
+    if response.method == "POST":
+        print("login submit")
+        username = response.POST["username"]
+        password = response.POST["password"]
+        print("user ", username, "pass ", password)
+        user = authenticate(response, username=username, password=password)
 
+        if user is not None:
+            print("user is valid :D")
+        else:
+            print("user IS NOT valid!!")
+
+    return render(response, "index.html", {})
+
+
+
+def test(response):
+    #all_posts = Posts.objects.get(name="Technology")
+    #print(all_posts)
+
+    print(response.user.is_authenticated)
+
+    # verify_login_user = authenticate(username="harish2", password="aloha@123")
+    #print("test user auth ", User.objects.get(username="test").is_authenticated())
+    # login(verify_login_user)
+
+    # print("user auth ", verify_login_user)
+
+    '''
+    if verify_login_user is None:
+        print(verify_login_user)
+        print("not authenticated")
+    else:
+        print(verify_login_user)
+    '''
+
+    return HttpResponse("<h1>Test</h1>")
+    pass
 
 def technology(response):
     technology_posts = Posts.objects.get(name="Technology").postitem_set.all()
@@ -67,7 +109,6 @@ def add_post(response):
         print(response.POST.get("post_title"))
         print("\n\n")
 
-        print("the category ----->>>> \n\n", received_post["category"])
         if not errors["title"] and not errors["text"] and not errors["link"] and not errors["image"]:
             print("no errors ", errors)
             # post_category = received_post.category
@@ -87,10 +128,20 @@ def add_post(response):
 
                 # form = CreatePost(response.POST)
                 # print("valid form: ", form.is_valid())
-            elif response.POST.get("submit") == "edit":
-                print("edit it is")
-                pass
+            elif json.loads(response.POST.get("submit"))["value"] == "edit":
+                print("submit response ", json.loads(response.POST.get("submit")))
 
+                post = Posts.objects.get(name=received_post["category"])
+                postitem_id = json.loads(response.POST.get("submit"))["id"]
+
+                edit_postitem = post.postitem_set.get(id=postitem_id)
+
+                edit_postitem.title = received_post["title"]
+                edit_postitem.text = received_post["text"]
+                edit_postitem.link = received_post["link"]
+                edit_postitem.image = received_post["image"]
+
+                edit_postitem.save()
 
         else:
             print("errors ", errors)
