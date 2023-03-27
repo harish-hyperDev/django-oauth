@@ -3,6 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login    #for authenticating user login
+from django.contrib.auth.hashers import make_password
+
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import JsonResponse
