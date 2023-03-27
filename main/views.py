@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
@@ -64,30 +65,38 @@ def test(response):
     else:
         print(verify_login_user)
     '''
-
-    return HttpResponse("<h1>Test</h1>")
+    if response.user.is_authenticated:
+        return HttpResponse("<h1>You're authenticated</h1>")
+    else:
+        return HttpResponse("<h1>You're not authenticated</h1>")
     pass
 
+@login_required
 def technology(response):
     technology_posts = Posts.objects.get(name="Technology").postitem_set.all()
     return render(response, "technology.html", {"visited": "technology", "posts": technology_posts})
 
 
+@login_required
+@login_required
 def news(response):
     news_posts = Posts.objects.get(name="News").postitem_set.all()
     return render(response, "news.html", {"visited": "news", "posts": news_posts})
 
 
+@login_required
 def sports(response):
     sports_posts = Posts.objects.get(name="Sports").postitem_set.all()
     return render(response, "sports.html", {"visited": "sports", "posts": sports_posts})
 
 
+@login_required
 def life(response):
     life_posts = Posts.objects.get(name="Life").postitem_set.all()
     return render(response, "life.html", {"visited": "life", "posts": life_posts})
 
 
+@login_required
 def add_post(response):
     print("response ", response.method)
 
@@ -99,6 +108,7 @@ def add_post(response):
             "link": response.POST.get("post_link"),
             "image": response.POST.get("post_image"),
             "category": response.POST.get("post_category"),
+            # "creator": User.objects.get(username=response.user.username)
         }
 
         print("\n\nrecursing\n\n")
@@ -128,7 +138,8 @@ def add_post(response):
                     title=received_post["title"],
                     text=received_post["text"],
                     image=received_post["image"],
-                    link=received_post["link"]
+                    link=received_post["link"],
+                    creator=User.objects.get(username=response.user.username)
                 ).save()
 
                 # saving the PostItem
@@ -169,6 +180,7 @@ def add_post(response):
 
     return render(response, "add_post.html", {"errors": {}})
 
+@login_required
 def edit_post(response):
     edit_post = json.loads(response.POST.get("edit"))
     print("edit post ", edit_post)
@@ -179,6 +191,7 @@ def edit_post(response):
     return post
 
 
+@login_required
 def manage_post(response):
     post_categories = Posts.objects.all()
 
@@ -244,10 +257,11 @@ def manage_post(response):
 
     all_posts = []
     for category in post_categories:
-        items = category.postitem_set.all()
+        items = category.postitem_set.filter(creator=User.objects.get(username=response.user))
         for item in items:
             all_posts.append(item)
 
+    print("all posts ", all_posts)
     # print("\n\n---all posts---\n\n", all_posts)
     # print("\n\nfirst post ", all_posts[0].text)
     return render(response, "manage_post.html", {"posts": all_posts})
