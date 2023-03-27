@@ -346,6 +346,9 @@
 
         removeTabUnderline();   //removing tab underlines on rendering index.html (by default)
 
+        $(function() {
+            console.log("{{ user.id }}")
+        })
     </script>
     <div class="tabs-container">
         <a onclick="changecolor(this)" class="selected-link" id="technology-tab" href="/technology">Technology</a>
@@ -390,7 +393,7 @@
                         </div>
 
                         <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block ">Sign in</button>
 
                         <div class="divider d-flex align-items-center my-4">
                             <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>

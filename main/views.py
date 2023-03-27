@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login    #for authenticating user login
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate, login    # for authenticating user login
+from django.contrib.auth.hashers import make_password, check_password
 
 from django.contrib.auth.models import User
 from django.core import serializers
@@ -19,7 +19,7 @@ import validators
 import json
 
 
-def login(response):
+def login_user(response):
     if response.method == "GET":
         print("login")
         print(response.user)
@@ -33,6 +33,11 @@ def login(response):
 
         if user is not None:
             print("user is valid :D")
+            print(response.path)
+            login(response, user)
+
+            return render(response, "index.html", {})
+
         else:
             print("user IS NOT valid!!")
 
@@ -41,13 +46,13 @@ def login(response):
 
 
 def test(response):
-    #all_posts = Posts.objects.get(name="Technology")
-    #print(all_posts)
-
     print(response.user.is_authenticated)
 
+    # all_posts = Posts.objects.get(name="Technology")
+    # print(all_posts)
+
     # verify_login_user = authenticate(username="harish2", password="aloha@123")
-    #print("test user auth ", User.objects.get(username="test").is_authenticated())
+    # print("test user auth ", User.objects.get(username="test").is_authenticated())
     # login(verify_login_user)
 
     # print("user auth ", verify_login_user)
